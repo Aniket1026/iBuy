@@ -1,5 +1,5 @@
-import { response } from "express";
 import Product from "../model/productModel.js";
+import CustomError from "../utils/CustomError.js";
 
 // -- Admin
 export const createProducts = async (req, res) => {
@@ -14,11 +14,11 @@ export const getAllProducts = async (req, res) => {
 
 // -- get unique product details
 
-export const productDetails = async(req,res) => {
+export const productDetails = async(req,res,next) => {
   try {
     const product = await Product.findById(req.params.id)
     if (!product) {
-      return res.status(404).json({ success: false, message: "product not found" })
+      return next(new CustomError("product not found",404))
     }
    return res.status(200).json({ success: true, product })
     
