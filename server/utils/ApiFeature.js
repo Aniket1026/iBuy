@@ -14,8 +14,6 @@ export class ApiFeature {
           },
         }
       : {};
-
-    // console.log(keyword);
     this.query = this.query.find({ ...keyword });
     return this;
   }
@@ -26,7 +24,18 @@ export class ApiFeature {
     // removing extra fields for category based search
     const removeFields = ["keyword", "page", "limit"];
     removeFields.forEach((key) => delete queryCopy[key]);
-    this.query = this.query.find(queryCopy);
+    //   filter for price and rating
+    let queryStr = JSON.stringify(queryCopy);
+    queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (key) => `$${key}`);
+
+    this.query = this.query.find(JSON.parse(queryStr));
+    return this;
+  }
+
+  pagination(pageSize) {
+    const pageNumber = Number(this.queryStr.page) || 1;
+    const skip = (pageNumber - 1) * pageSize;
+    this.query = this.query.limit(pageSize).skip(skip);
     return this;
   }
 }
