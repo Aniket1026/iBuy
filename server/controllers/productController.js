@@ -1,4 +1,5 @@
 import Product from "../model/productModel.js";
+import { ApiFeature } from "../utils/ApiFeature.js";
 import CustomError from "../utils/CustomError.js";
 
 // -- Admin
@@ -13,7 +14,8 @@ export const createProducts = async (req, res) => {
 
 export const getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find();
+    const apiFeature = new ApiFeature(Product.find(), req.query).search()
+    const products = await await apiFeature.query
     res.status(200).json({ success: true, products });
   } catch (error) {
     res.status(500).json({ msg: "Cannot fetch all products " + error });
