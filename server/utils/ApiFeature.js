@@ -26,7 +26,15 @@ export class ApiFeature {
     // removing extra fields for category based search
     const removeFields = ["keyword", "page", "limit"];
     removeFields.forEach((key) => delete queryCopy[key]);
-    this.query = this.query.find(queryCopy);
+    //   filter for price and rating
+      let queryStr = JSON.stringify(queryCopy)
+      console.log(queryStr)
+      queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, key => `$${key}`)
+      console.log(queryStr)
+      
+      
+
+    this.query = this.query.find(JSON.parse(queryStr));
     return this;
   }
 }
