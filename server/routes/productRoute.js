@@ -8,4 +8,4 @@ router.put('/product/:id', productUpdate)
 router.delete('/product/:id', deleteProduct)
 router.get('/product/:id',productDetails)
 
-export default router;
+export const product = router
