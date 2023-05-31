@@ -13,9 +13,11 @@ export const userRegister = async (req, res) => {
         url: "sample url",
       },
     });
+
+    const token = user.getJWTToken()
     res
       .status(201)
-      .json({ success: true, msg: "User created successfully", user });
+      .json({ success: true, msg: "User created successfully", token });
   } catch (error) {
     res.status(500).json({
       success: false,

@@ -2,6 +2,9 @@ import mongoose from "mongoose";
 import validator from "validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const userScehma = new mongoose.Schema({
   name: {
@@ -46,6 +49,13 @@ userScehma.pre("save", async function (next) {
   }
   this.password = await bcrypt.hash(this.password, 10);
 });
+
+// JWT token
+userScehma.methods.getJWTToken = function () {
+  return jwt.sign({ id: this._id }, process.env.SECRET_KEY, {
+    expiresIn: process.env.JWT_EXPIRE,
+  });
+}
 
 const User = mongoose.model("User", userScehma);
 export default User;
