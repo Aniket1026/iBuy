@@ -57,5 +57,10 @@ userScehma.methods.getJWTToken = function () {
   });
 }
 
+// comparing password
+userScehma.methods.comparePassword = async function (password) {
+  return await bcrypt.compare(password, this.password)
+}
+
 const User = mongoose.model("User", userScehma);
 export default User;
