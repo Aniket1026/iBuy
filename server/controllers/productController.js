@@ -5,10 +5,11 @@ import CustomError from "../utils/CustomError.js";
 // -- Admin
 export const createProducts = async (req, res) => {
   try {
+    req.body.createdBy = req.user.id;
     const product = await Product.create(req.body);
     res.status(201).json({ success: true, product });
   } catch (error) {
-    res.status(500).json({ msg: "error in product creating" + error });
+    res.status(500).json({ msg: "error in product creating : " + error });
   }
 };
 
