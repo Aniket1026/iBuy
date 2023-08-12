@@ -1,4 +1,5 @@
 import User from "../model/userModel.js";
+import sendToken from "../utils/jwtToken.js";
 
 export const userRegister = async (req, res) => {
   try {
@@ -14,10 +15,7 @@ export const userRegister = async (req, res) => {
       },
     });
 
-    const token = user.getJWTToken();
-    res
-      .status(201)
-      .json({ success: true, msg: "User created successfully", token });
+    sendToken(user, 201, res);
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -48,10 +46,17 @@ export const userLogin = async (req, res) => {
       .status(401)
       .json({ success: false, msg: "Incorrect email or passsword" });
   }
+  sendToken(user, 200, res);
+};
 
-  const token = user.getJWTToken();
-
-  return res
-    .status(200)
-    .json({ success: true, msg: "user login successfully ", token });
+// user logout
+export const userLogout = async (req, res) => {
+  res.cookie("token", null, {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
+  res.status(200).json({
+    success: true,
+    message: "Logout successful",
+  });
 };
