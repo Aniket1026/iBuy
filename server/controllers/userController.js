@@ -48,3 +48,15 @@ export const userLogin = async (req, res) => {
   }
   sendToken(user, 200, res);
 };
+
+// user logout
+export const userLogout = async (req, res) => {
+  res.cookie("token", null, {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
+  res.status(200).json({
+    success: true,
+    message: "Logout successful",
+  });
+};
