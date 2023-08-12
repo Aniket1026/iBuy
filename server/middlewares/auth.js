@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken"
 import User from "../model/userModel.js"
+import CustomError from "../utils/CustomError.js"
 
 export const isUserAuthenticated = async(req,res,next) => {
     const { token } = req.cookies
@@ -7,7 +8,16 @@ export const isUserAuthenticated = async(req,res,next) => {
         return next(new Error("Please login to access this resource "))
     }
     const decodedData = jwt.verify(token, process.env.SECRET_KEY);
-    req.user = await User.findById(decodedData._id)
+    req.user = await User.findById(decodedData.id)
     next()
-    console.log(token)
+}
+
+export const authorizeRoles = (...roles) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
+            res.status(403)
+            return next( new CustomError(`Role ${req.user.role} is not allowed to access this resource`))
+        }
+        next()
+    }
 }
