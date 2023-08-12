@@ -15,13 +15,13 @@ export const createProducts = async (req, res) => {
 export const getAllProducts = async (req, res) => {
   try {
     const pageSize = 5;
-    const productCount = Product.countDocuments();
+    const productCount = await Product.countDocuments();
 
     const apiFeature = new ApiFeature(Product.find(), req.query)
       .search()
       .filter()
       .pagination(pageSize);
-    const products = await await apiFeature.query;
+    const products = await apiFeature.query;
     res.status(200).json({ success: true, products,productCount });
   } catch (error) {
     res.status(500).json({ msg: "Cannot fetch all products " + error });
