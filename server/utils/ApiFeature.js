@@ -1,4 +1,3 @@
-import { connect } from "mongoose";
 
 export class ApiFeature {
   constructor(query, queryStr) {
