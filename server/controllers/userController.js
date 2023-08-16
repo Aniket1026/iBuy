@@ -1,5 +1,6 @@
 import User from "../model/userModel.js";
 import sendToken from "../utils/jwtToken.js";
+import { sendEmail } from "../utils/sendEmail.js";
 
 export const userRegister = async (req, res) => {
   try {
@@ -59,4 +60,38 @@ export const userLogout = async (req, res) => {
     success: true,
     message: "Logout successful",
   });
+};
+
+// forgot password
+export const forgotPassword = async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    return next(new Error("User not found"));
+  }
+
+  // get resetToken
+  const resetToken = user.getPasswordResetToken();
+  await user.save({ validateBeforeSave: false });
+
+  const resetPasswordLink = `${req.protocol}://${req.get(
+    "host"
+  )}/password/reset/${resetToken}`;
+  const message = `Tap the link to reset your password 🤭 :- \n\n ${resetPasswordLink} `;
+
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: "iBuy Password Reset 🤔",
+      message,
+    });
+    res.status(200).json({
+      sucess: true,
+      message: `Email sent to ${user.email} successfully `,
+    });
+  } catch (error) {
+    (user.resetPasswordToken = undefined),
+      (user.resetPasswordExpire = undefined);
+    await user.save({ validateBeforeSave: false });
+    return next(new Error(error.message));
+  }
 };
