@@ -1,6 +1,7 @@
 import User from "../model/userModel.js";
 import sendToken from "../utils/jwtToken.js";
 import { sendEmail } from "../utils/sendEmail.js";
+import crypto from 'crypto'
 
 export const userRegister = async (req, res) => {
   try {
@@ -75,7 +76,7 @@ export const forgotPassword = async (req, res, next) => {
 
   const resetPasswordLink = `${req.protocol}://${req.get(
     "host"
-  )}/password/reset/${resetToken}`;
+  )}/api/v1/password/reset/${resetToken}`;
   const message = `Tap the link to reset your password 🤭 :- \n\n ${resetPasswordLink} `;
 
   try {
@@ -95,3 +96,26 @@ export const forgotPassword = async (req, res, next) => {
     return next(new Error(error.message));
   }
 };
+
+// reset password
+export const resetPassword = async(req,res) => {
+const resetPasswordToken = crypto
+  .createHash("sha256")
+  .update(req.params.token)
+    .digest("hex");
+  
+  const user = await User.findOne({ resetPasswordToken, resetPasswordExpire: { $gt: Date.now() } });
+  if (!user) {
+    return res.status(400).json({ msg: 'Inavlid or expired token ' })
+  }
+
+  if (req.body.password !== req.body.confirmPassword) {
+    return res.status(400).json({ msg: "password does not match !!!" })
+  }
+  user.password = req.body.password
+  user.resetPasswordToken = undefined
+  user.resetPasswordToken = undefined
+
+  await user.save()
+  sendToken(user,200,res)
+}
