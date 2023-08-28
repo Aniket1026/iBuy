@@ -1,7 +1,7 @@
 import User from "../model/userModel.js";
 import sendToken from "../utils/jwtToken.js";
 import { sendEmail } from "../utils/sendEmail.js";
-import crypto from 'crypto'
+import crypto from "crypto";
 
 export const userRegister = async (req, res) => {
   try {
@@ -28,27 +28,31 @@ export const userRegister = async (req, res) => {
 
 // user login route
 export const userLogin = async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return res
-      .status(400)
-      .json({ success: false, msg: "Please enter email and password " });
-  }
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ success: false, msg: "Please enter email and password " });
+    }
 
-  const user = await User.findOne({ email }).select("+password");
-  if (!user) {
-    return res
-      .status(401)
-      .json({ success: false, msg: "Invalid email or password" });
-  }
+    const user = await User.findOne({ email }).select("+password");
+    if (!user) {
+      return res
+        .status(401)
+        .json({ success: false, msg: "Invalid email or password" });
+    }
 
-  const isPasswordMatch = await user.comparePassword(password);
-  if (!isPasswordMatch) {
-    return res
-      .status(401)
-      .json({ success: false, msg: "Incorrect email or passsword" });
+    const isPasswordMatch = await user.comparePassword(password);
+    if (!isPasswordMatch) {
+      return res
+        .status(401)
+        .json({ success: false, msg: "Incorrect email or passsword" });
+    }
+    sendToken(user, 200, res);
+  } catch (error) {
+    console.log("user login error ");
   }
-  sendToken(user, 200, res);
 };
 
 // user logout
@@ -98,24 +102,40 @@ export const forgotPassword = async (req, res, next) => {
 };
 
 // reset password
-export const resetPassword = async(req,res) => {
-const resetPasswordToken = crypto
-  .createHash("sha256")
-  .update(req.params.token)
-    .digest("hex");
-  
-  const user = await User.findOne({ resetPasswordToken, resetPasswordExpire: { $gt: Date.now() } });
-  if (!user) {
-    return res.status(400).json({ msg: 'Inavlid or expired token ' })
-  }
+export const resetPassword = async (req, res) => {
+  try {
+    const resetPasswordToken = crypto
+      .createHash("sha256")
+      .update(req.params.token)
+      .digest("hex");
 
-  if (req.body.password !== req.body.confirmPassword) {
-    return res.status(400).json({ msg: "password does not match !!!" })
-  }
-  user.password = req.body.password
-  user.resetPasswordToken = undefined
-  user.resetPasswordToken = undefined
+    const user = await User.findOne({
+      resetPasswordToken,
+      resetPasswordExpire: { $gt: Date.now() },
+    });
+    if (!user) {
+      return res.status(400).json({ msg: "Inavlid or expired token " });
+    }
 
-  await user.save()
-  sendToken(user,200,res)
-}
+    if (req.body.password !== req.body.confirmPassword) {
+      return res.status(400).json({ msg: "password does not match !!!" });
+    }
+    user.password = req.body.password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordToken = undefined;
+
+    await user.save();
+    sendToken(user, 200, res);
+  } catch (error) {
+    console.log("Reset Passoword error");
+  }
+};
+
+// get user detail
+
+export const getUserDetail = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id);
+    res.status(200).json({ success: true, user });
+  } catch (error) {}
+};
