@@ -38,5 +38,11 @@ router.get(
   getUser
 );
 
+router.put(
+  "/admin/user/update/:id",
+  isUserAuthenticated,
+  authorizeRoles("admin"),
+  updateUserRole
+);
 
 export const user = router;

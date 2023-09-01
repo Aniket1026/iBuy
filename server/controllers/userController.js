@@ -207,3 +207,27 @@ export const getUser = async (req, res) => {
     res.status(400).json({ success: false, msg: "error in get Users" });
   }
 };
+
+// update user Role by admin
+export const updateUserRole = async (req, res) => {
+  try {
+    const newData = {
+      name: req.body.name,
+      email: req.body.email,
+      role: req.body.role,
+    };
+
+    const user = await User.findByIdAndUpdate(req.params.id, newData, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+
+    res.status(201).json({ success: true });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(400)
+      .json({ sucess: false, msg: "profile Role cannot be updated" });
+  }
+};
