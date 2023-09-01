@@ -51,7 +51,7 @@ export const userLogin = async (req, res) => {
     }
     sendToken(user, 200, res);
   } catch (error) {
-    res.status(400).json({ sucess: false, msg: "error in user login" })
+    res.status(400).json({ sucess: false, msg: "error in user login" });
   }
 };
 
@@ -159,6 +159,28 @@ export const updatePassword = async (req, res) => {
     sendToken(user, 201, res);
   } catch (error) {
     console.log(error);
-    return res.status(404).json({ success: false, msg: "password cannot be updated" });
+    return res
+      .status(404)
+      .json({ success: false, msg: "password cannot be updated" });
+  }
+};
+
+export const updateUserProfile = async (res, req) => {
+  try {
+    const newData = {
+      name: req.body.name,
+      email: req.body.email,
+    };
+
+    const user = await User.findByIdAndUpdate(req.body.id, newData, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+
+    res.status(201).json({ success: true });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ sucess: false, msg: "profile cannot be updated" });
   }
 };
