@@ -31,6 +31,12 @@ router.get(
   authorizeRoles("admin"),
   getAllUsers
 );
+router.get(
+  "/admin/user/:id",
+  isUserAuthenticated,
+  authorizeRoles("admin"),
+  getUser
+);
 
 
 export const user = router;

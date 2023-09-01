@@ -194,3 +194,16 @@ export const getAllUsers = async (req, res) => {
     res.status(400).json({ success: false, msg: "error in getAllUsers" });
   }
 };
+
+export const getUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ success: false, msg: "user not found" });
+    }
+    res.status(200).json({ success: true, user });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ success: false, msg: "error in get Users" });
+  }
+};
