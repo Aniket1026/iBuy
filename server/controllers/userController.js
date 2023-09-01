@@ -51,7 +51,7 @@ export const userLogin = async (req, res) => {
     }
     sendToken(user, 200, res);
   } catch (error) {
-    console.log("user login error ");
+    res.status(400).json({ sucess: false, msg: "error in user login" })
   }
 };
 
@@ -127,7 +127,7 @@ export const resetPassword = async (req, res) => {
     await user.save();
     sendToken(user, 200, res);
   } catch (error) {
-    console.log("Reset Passoword error");
+    console.log("Reset Password error");
   }
 };
 
@@ -137,5 +137,28 @@ export const getUserDetail = async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id);
     res.status(200).json({ success: true, user });
-  } catch (error) {}
+  } catch (error) {
+    console.log("User detail caanot be fetched ");
+  }
+};
+
+export const updatePassword = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("+password");
+    const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
+
+    if (!isPasswordMatched) {
+      return res.status(400).json({ msg: "entered password is incorrect" });
+    }
+    if (req.body.newPassword !== req.body.confirmPassword) {
+      return res.status(400).json({ msg: " password does not match " });
+    }
+
+    user.password = req.body.newPassword;
+    await user.save();
+    sendToken(user, 201, res);
+  } catch (error) {
+    console.log(error);
+    return res.status(404).json({ success: false, msg: "password cannot be updated" });
+  }
 };
