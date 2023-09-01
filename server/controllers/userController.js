@@ -231,3 +231,19 @@ export const updateUserRole = async (req, res) => {
       .json({ sucess: false, msg: "profile Role cannot be updated" });
   }
 };
+
+// delete user by admin
+export const removeUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ success: false, msg: "user not found" });
+    }
+    await user.deleteOne();
+
+    res.status(201).json({ success: true, msg: "user removed successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ sucess: false, msg: "profile cannot be removed" });
+  }
+};

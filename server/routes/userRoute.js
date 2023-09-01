@@ -44,5 +44,11 @@ router.put(
   authorizeRoles("admin"),
   updateUserRole
 );
+router.delete(
+  "/admin/user/:id",
+  isUserAuthenticated,
+  authorizeRoles("admin"),
+  removeUser
+);
 
 export const user = router;
