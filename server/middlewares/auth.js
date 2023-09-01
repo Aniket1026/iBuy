@@ -22,12 +22,10 @@ export const authorizeRoles = (...roles) => {
   try {
     return (req, res, next) => {
       if (!roles.includes(req.user.role)) {
-        res.status(403);
-        return next(
-          new CustomError(
-            `Role ${req.user.role} is not allowed to access this resource`
-          )
-        );
+        res.status(403).json({
+          success: false,
+          msg: `Role ${req.user.role} is not authorized to access this resource`,
+        });
       }
       next();
     };

@@ -184,3 +184,66 @@ export const updateUserProfile = async (res, req) => {
     res.status(400).json({ sucess: false, msg: "profile cannot be updated" });
   }
 };
+
+// Admin route
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json({ success: true, users });
+  } catch (error) {
+    res.status(400).json({ success: false, msg: "error in getAllUsers" });
+  }
+};
+
+export const getUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ success: false, msg: "user not found" });
+    }
+    res.status(200).json({ success: true, user });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ success: false, msg: "error in get Users" });
+  }
+};
+
+// update user Role by admin
+export const updateUserRole = async (req, res) => {
+  try {
+    const newData = {
+      name: req.body.name,
+      email: req.body.email,
+      role: req.body.role,
+    };
+
+    const user = await User.findByIdAndUpdate(req.params.id, newData, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+
+    res.status(201).json({ success: true });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(400)
+      .json({ sucess: false, msg: "profile Role cannot be updated" });
+  }
+};
+
+// delete user by admin
+export const removeUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ success: false, msg: "user not found" });
+    }
+    await user.deleteOne();
+
+    res.status(201).json({ success: true, msg: "user removed successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ sucess: false, msg: "profile cannot be removed" });
+  }
+};
