@@ -11,19 +11,19 @@ const router = express.Router();
 
 router.get("/products", isUserAuthenticated, getAllProducts);
 router.post(
-  "/product/new",
+  "/admin/product/new",
   isUserAuthenticated,
   authorizeRoles("admin"),
   createProducts
 );
 router.put(
-  "/product/:id",
+  "/admin/product/:id",
   isUserAuthenticated,
   authorizeRoles("admin"),
   productUpdate
 );
 router.delete(
-  "/product/:id",
+  "/admin/product/:id",
   isUserAuthenticated,
   authorizeRoles("admin"),
   deleteProduct
