@@ -23,7 +23,7 @@ export const getAllProducts = async (req, res) => {
       .filter()
       .pagination(pageSize);
     const products = await apiFeature.query;
-    res.status(200).json({ success: true, products,productCount });
+    res.status(200).json({ success: true, products, productCount });
   } catch (error) {
     res.status(500).json({ msg: "Cannot fetch all products " + error });
   }
@@ -79,5 +79,41 @@ export const deleteProduct = async (req, res) => {
       .json({ success: true, message: "product deleted successfully" });
   } catch (error) {
     return res.status(500).json(error);
+  }
+};
+
+export const productReview = async (req, res) => {
+  try {
+    const { rating, comment, productId } = req.body;
+
+    const review = {
+      user: req.user._id,
+      name: req.user.name,
+      rating: Number(rating),
+      comment,
+    };
+
+    const product = await Product.findById(productId);
+    if (!product)
+      return res
+        .status(400)
+        .json({ success: false, msg: "product not found for review" });
+
+    product.reviews.push(review);
+    product.numOfReviews = product.reviews.length;
+
+    let avg = 0;
+    product.ratings = product.reviews.forEach((rev) => {
+      avg += rev.rating;
+    });
+    product.ratings = avg / product.reviews.length;
+
+    await product.save({ validateBeforeSave: false });
+    return res.status(201).json({ success: true, msg: "review added" });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(500)
+      .json({ success: false, msg: "error in submitting product review" });
   }
 };
