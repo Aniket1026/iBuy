@@ -2,7 +2,9 @@ import express from "express";
 import {
   createProducts,
   deleteProduct,
+  deleteReview,
   getAllProducts,
+  getAllReviews,
   productDetails,
   productReview,
   productUpdate,
@@ -31,5 +33,8 @@ router.delete(
 );
 router.get("/product/:id", isUserAuthenticated, productDetails);
 router.put("/product/review", isUserAuthenticated, productReview);
+router.get('/reviews', getAllReviews)
+router.delete('/review', isUserAuthenticated, deleteReview)
+
 
 export const product = router;
