@@ -117,3 +117,19 @@ export const productReview = async (req, res) => {
       .json({ success: false, msg: "error in submitting product review" });
   }
 };
+
+// get all reviews of a product
+
+export const getAllReviews = async (req, res) => {
+  try {
+    const product = await Product.findById(req.query.id);
+    if (!product)
+      return res
+        .status(404)
+        .json({ success: false, msg: "cannot find the product " });
+    
+    res.status(200).json({success:true,reviews: product.reviews})
+  } catch (error) {
+        res.status(500).json({success:false,msg:'caanot get reviews '})
+  }
+};
