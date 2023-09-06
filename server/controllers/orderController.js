@@ -70,14 +70,14 @@ export const getAllOrders = async (req, res) => {
       totalAmount += order.totalPrice;
     });
 
-    res.status.json({ success: true, orders, totalAmount });
+    res.status(200).json({ success: true, orders, totalAmount });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .json({ success: false, msg: "Error while fetching all orders" });
   }
 };
-
 
 // update product status
 export const updateOrder = async (req, res) => {
@@ -111,6 +111,7 @@ export const updateOrder = async (req, res) => {
       success: true,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       success: false,
       msg: "error in updating status ",
@@ -129,3 +130,22 @@ async function updateStock(id, quantity) {
     console.log(error);
   }
 }
+
+// delete Order -- Admin
+export const deleteOrder = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+      return res.status(400).json({ msg: "Order not found with this Id" });
+    }
+
+    await Order.findByIdAndDelete(order._id);
+
+    res.status(200).json({
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
