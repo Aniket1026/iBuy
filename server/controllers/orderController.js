@@ -48,3 +48,13 @@ export const getSingleOrder = async (req, res) => {
     res.status(500).json({ success: false, msg: "error while getting order" });
   }
 };
+
+// get all orders of user
+export const myOrders = async (req, res) => {
+  try {
+    const order = await Order.find({ user: req.user._id });
+    res.status(200).json({ success: true, order });
+  } catch (error) {
+    res.status(500).json({ success: false, msg: "error while getting order" });
+  }
+};
