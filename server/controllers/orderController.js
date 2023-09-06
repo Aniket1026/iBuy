@@ -26,9 +26,25 @@ export const newOrder = async (req, res) => {
       paidAt: Date.now(),
       user: req.user._id,
     });
-      
-    res.status(201).json({ success: true, order })   
+
+    res.status(201).json({ success: true, order });
   } catch (error) {
-      res.status(500).json({ success: false, msg: 'error while creating order' })
+    res.status(500).json({ success: false, msg: "error while creating order" });
+  }
+};
+
+// get single order
+
+export const getSingleOrder = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id).populate(
+      "user",
+      "name email"
+    );
+    if (!order) return res.status(404).json({ msg: "Cannot find the order" });
+
+    res.status(200).json({ success: true, order });
+  } catch (error) {
+    res.status(500).json({ success: false, msg: "error while getting order" });
   }
 };
