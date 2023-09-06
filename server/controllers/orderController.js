@@ -1,5 +1,6 @@
 import Order from "../model/orderModel.js";
 import Product from "../model/productModel.js";
+import { order } from "../routes/orderRoute.js";
 
 // create nre order
 
@@ -58,3 +59,22 @@ export const myOrders = async (req, res) => {
     res.status(500).json({ success: false, msg: "error while getting order" });
   }
 };
+
+// get all orders by admin
+
+export const getAllOrders = async (req, res) => {
+  try {
+    const orders = await Order.find();
+    let totalAmount = 0;
+    orders.forEach((order) => {
+      totalAmount += order.totalPrice;
+    });
+
+    res.status.json({ success: true, orders, totalAmount });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, msg: "Error while fetching all orders" });
+  }
+};
+
