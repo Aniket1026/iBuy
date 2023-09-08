@@ -1,8 +1,11 @@
+import React from "react";
 import { ReactNavbar } from "overlay-navbar";
 import logo from '../../../images/logo.png'
+import './header.css'
 
 const Header = () => {
   const options = {
+    burgerColor:"white",
     burgerColorHover: "#eb4034",
     logo,
     logoWidth: "20vmax",
@@ -35,9 +38,9 @@ const Header = () => {
     cartIconMargin: "1vmax",
   };
   return (
-    <>
+    <React.Fragment>
       <ReactNavbar {...options} />
-    </>
+    </React.Fragment>
   );
 };
 
