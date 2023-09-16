@@ -1,11 +1,40 @@
-import express from 'express'
-import { createProducts, deleteProduct, getAllProducts, productDetails, productUpdate } from '../controllers/productController.js'
-const router = express.Router()
+import express from "express";
+import {
+  createProducts,
+  deleteProduct,
+  deleteReview,
+  getAllProducts,
+  getAllReviews,
+  productDetails,
+  productReview,
+  productUpdate,
+} from "../controllers/productController.js";
+import { authorizeRoles, isUserAuthenticated } from "../middlewares/auth.js";
+const router = express.Router();
 
-router.get('/products', getAllProducts)
-router.post('/product/new', createProducts)
-router.put('/product/:id', productUpdate)
-router.delete('/product/:id', deleteProduct)
-router.get('/product/:id',productDetails)
+router.get("/products", isUserAuthenticated, getAllProducts);
+router.post(
+  "/admin/product/new",
+  isUserAuthenticated,
+  authorizeRoles("admin"),
+  createProducts
+);
+router.put(
+  "/admin/product/:id",
+  isUserAuthenticated,
+  authorizeRoles("admin"),
+  productUpdate
+);
+router.delete(
+  "/admin/product/:id",
+  isUserAuthenticated,
+  authorizeRoles("admin"),
+  deleteProduct
+);
+router.get("/product/:id", isUserAuthenticated, productDetails);
+router.put("/product/review", isUserAuthenticated, productReview);
+router.get('/reviews', getAllReviews)
+router.delete('/review', isUserAuthenticated, deleteReview)
 
-export const product = router
+
+export const product = router;
