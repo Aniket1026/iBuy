@@ -1,6 +1,5 @@
 import Product from "../model/productModel.js";
 import { ApiFeature } from "../utils/ApiFeature.js";
-import CustomError from "../utils/CustomError.js";
 
 // -- Admin
 export const createProducts = async (req, res) => {
@@ -35,7 +34,7 @@ export const productDetails = async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) {
-      return next(new CustomError("product not found", 404));
+      return next(new Error("product not found", 404));
     }
     return res.status(200).json({ success: true, product });
   } catch (error) {
