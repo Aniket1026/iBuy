@@ -1,4 +1,3 @@
-import CustomError from "../utils/CustomError.js";
 
 export const error = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
