@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
 import { CgMouse } from "react-icons/cg";
-import MetaData from "../layout/MetaData.jsx";
 import { useDispatch, useSelector } from "react-redux";
+
+import MetaData from "../layout/MetaData.jsx";
 import { fetchProducts } from "../../features/productSlice.jsx";
 import "./home.css";
 import ProductCard from "./product.jsx";
 import Loader from "../layout/Loader/loader.jsx";
+import Alert from "../layout/Alert/alert.jsx";
 
 const Home = () => {
-  // const { products, productsCount } = useSelector(state => state.products)
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.products.products);
-  const status = useSelector((state) => state.products.status);
-  const error = useSelector((state) => state.products.error);
+
+  const { error, products, status } = useSelector((state) => state.products);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -33,6 +33,7 @@ const Home = () => {
       </div>
       <h2 className="homeHeading">Featured Products</h2>
       <div className="container" id="container">
+        {error && <Alert message={error} />}
         {status == "loading" ? (
           <Loader />
         ) : (
