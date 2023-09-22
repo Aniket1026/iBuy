@@ -4,10 +4,13 @@ import { Carousel } from "@material-tailwind/react";
 import { useParams } from "react-router-dom";
 import { fetchProductDetails } from "../../features/productSlice.jsx";
 import "./productDetail.css";
+import { Rating } from "@material-tailwind/react";
+import Loader from "../layout/Loader/loader.jsx";
+import Alert from "../layout/Alert/alert.jsx";
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
-  const { productDetails } = useSelector(
+  const { error, status, productDetails } = useSelector(
     (state) => state.products
   );
   const { productId } = useParams();
@@ -20,19 +23,70 @@ const ProductDetail = () => {
 
   return (
     <React.Fragment>
-      <div className="productDetails">
-        <Carousel className="rounded-xl">
-          {productDetails &&
-            productDetails.product.images.map((item, i) => (
-              <img
-                className="h-full w-full object-cover"
-                key={i}
-                src={item.url}
-                alt={`${i} Slide`}
-              />
-            ))}
-        </Carousel>
-      </div>
+      {error && <Alert message={error} />}
+      {status == "loading" ? (
+        <Loader />
+      ) : (
+        <div className="ProductDetails">
+          <div className="detailsCard">
+            <Carousel className="rounded-xl">
+              {/* <> */}
+                {productDetails &&
+                  productDetails.product.images.map((item, i) => (
+                    <img
+                      className=" w-full object-cover"
+                      key={i}
+                      src={item.url}
+                      alt={`${i} Slide`}
+                    />
+                  ))}
+              {/* </> */}
+            </Carousel>
+          </div>
+          <div>
+            <div className="detailsBlock-1">
+              <h2>{productDetails.product.name}</h2>
+              <p>productDetails # {productDetails.product._id}</p>
+            </div>
+            <div className="detailsBlock-2">
+              <Rating />
+              <span className="detailsBlock-2-span">
+                {" "}
+                ({productDetails.product.numOfReviews} Reviews)
+              </span>
+            </div>
+            <div className="detailsBlock-3">
+              <h1>{`₹${productDetails.product.price}`}</h1>
+              <div className="detailsBlock-3-1">
+                <div className="detailsBlock-3-1-1">
+                  <button>-</button>
+                  <input readOnly type="number" value="" />
+                  <button>+</button>
+                </div>
+                <button
+                disabled={productDetails.product.Stock < 1 ? true : false}
+                >
+                  Add to Cart
+                </button>
+              </div>
+
+              <p>
+                Status:
+                <b className={productDetails.product.Stock < 1 ? "redColor" : "greenColor"}>
+                {productDetails.product.Stock < 1 ? "OutOfStock" : "InStock"}
+                </b>
+              </p>
+            </div>
+            <div className="detailsBlock-4">
+              Description : <p>{productDetails.product.description}</p>
+            </div>
+            <button className="submitReview">
+            Submit Review
+            </button>
+          </div>
+          <h3 className="reviewsHeading">REVIEWS</h3>
+        </div>
+      )}
     </React.Fragment>
   );
 };
