@@ -1,17 +1,17 @@
 .ProductDetails {
-  /* background-color: rgb(154, 144, 144); */
   width: 100vw;
   max-width: 100%;
   padding: 6vmax;
   box-sizing: border-box;
   display: flex;
+  flex-direction: column;
 }
 
 .ProductDetails > div {
   width: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+  flex-direction: row;
+  justify-content: space-around;
   align-items: center;
   padding: 2vmax;
   box-sizing: border-box;
@@ -19,13 +19,12 @@
 }
 
 .ProductDetails > div:last-child {
-  align-items: flex-start;
+  width: 60%;
 }
 
 .detailsCard{
-    max-width: 50vw;
-    max-width: 100%;
-    /* background-color: aquamarine; */
+    width: 400px;
+    min-width: 50%;
 }
 
 .CarouselImage {
@@ -44,21 +43,17 @@
 
 .detailsBlock-2 {
   display: flex;
+  flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   border-top: 1px solid rgba(0, 0, 0, 0.205);
   border-bottom: 1px solid rgba(0, 0, 0, 0.205);
-  width: 70%;
   padding: 1vmax 0;
 }
 
 .detailsBlock-2-span {
   font: 200 0.8vmax cursive;
   color: rgba(0, 0, 0, 0.699);
-}
-
-.detailsBlock-3 {
-  width: 70%;
 }
 
 .detailsBlock-3 > h1 {
@@ -85,7 +80,7 @@
 
 .detailsBlock-3-1-1 > input {
   border: none;
-  width: 1vmax;
+  width: 2vmax;
   text-align: center;
   outline: none;
   font: 400 0.8vmax "Roboto";
@@ -212,6 +207,14 @@
     align-items: center;
   }
 
+  .ProductDetails > div {
+    flex-direction: column;
+  }
+
+  .detailsCard{
+    width: 300px;
+  }
+
   .detailsBlock-1 > h2 {
     font-size: 2.8vmax;
     text-align: center;
@@ -224,6 +227,7 @@
 
   .detailsBlock-2 {
     justify-content: center;
+    align-items: center;
   }
   .detailsBlock-2 > span {
     font-size: 1.5vmax;
@@ -247,7 +251,6 @@
   }
 
   .detailsBlock-3-1-1 > input {
-    padding: 1.5vmax;
     width: 3vmax;
     font: 400 1.8vmax "Roboto";
   }
@@ -284,7 +287,7 @@
     font: 600 3vw "Roboto";
   }
   .reviewCardComment {
-    font: 300 5vw cursive;
+    font: 300 2vw cursive;
   }
 }
 
