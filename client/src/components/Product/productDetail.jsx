@@ -35,8 +35,9 @@ const ProductDetail = () => {
   useEffect(() => {
     console.log("Before dispatching fetchProductDetails");
     dispatch(fetchProductDetails(productId));
+    console.log(productDetails);
     console.log("After dispatching fetchProductDetails");
-  }, [dispatch]);
+  }, []);
 
   return (
     <React.Fragment>
@@ -49,8 +50,8 @@ const ProductDetail = () => {
             <div className="detailsCard">
               <Carousel className="rounded-xl">
                 {/* <div> */}
-                {productDetails &&
-                  productDetails.product.images.map((item, i) => (
+                {productDetails?.product?.images &&
+                  productDetails?.product?.images?.map((item, i) => (
                     <div key={i}>
                       <img
                         className=" w-full object-cover"
@@ -65,18 +66,18 @@ const ProductDetail = () => {
             </div>
             <div className="w-80">
               <div className="detailsBlock-1">
-                <h2>{productDetails.product.name}</h2>
-                <p>productDetails # {productDetails.product._id}</p>
+                <h2>{productDetails?.product?.name}</h2>
+                <p>productDetails # {productDetails?.product?._id}</p>
               </div>
               <div className="detailsBlock-2">
-                <Rating value={productDetails.product.ratings} readonly />
+                <Rating value={productDetails?.product?.ratings} readonly />
                 <span className="detailsBlock-2-span">
                   {" "}
-                  ({productDetails.product.numOfReviews} Reviews)
+                  ({productDetails?.product?.numOfReviews} Reviews)
                 </span>
               </div>
               <div className="detailsBlock-3">
-                <h1>{`₹${productDetails.product.price}`}</h1>
+                <h1>{`₹${productDetails?.product?.price}`}</h1>
                 <div className="detailsBlock-3-1">
                   <div className="detailsBlock-3-1-1">
                     <button onClick={decreaseQuantity}>-</button>
@@ -84,7 +85,7 @@ const ProductDetail = () => {
                     <button onClick={increaseQuantity}>+</button>
                   </div>
                   <button
-                    disabled={productDetails.product.Stock < 1 ? true : false}
+                    disabled={productDetails?.product?.Stock < 1 ? true : false}
                   >
                     Add to Cart
                   </button>
@@ -94,29 +95,29 @@ const ProductDetail = () => {
                   Status:
                   <b
                     className={
-                      productDetails.product.Stock < 1
+                      productDetails?.product?.Stock < 1
                         ? "redColor"
                         : "greenColor"
                     }
                   >
-                    {productDetails.product.Stock < 1
+                    {productDetails?.product?.Stock < 1
                       ? "OutOfStock"
                       : "InStock"}
                   </b>
                 </p>
               </div>
               <div className="detailsBlock-4">
-                Description : <p>{productDetails.product.description}</p>
+                Description : <p>{productDetails?.product?.description}</p>
               </div>
               <button className="submitReview">Submit Review</button>
             </div>
           </div>
           <h3 className="reviewsHeading">REVIEWS</h3>
-          {productDetails.product.reviews &&
-          productDetails.product.reviews[0] ? (
+          {productDetails?.product.reviews &&
+          productDetails?.product.reviews[0] ? (
             <div className="reviews">
-              {productDetails.product.reviews &&
-                productDetails.product.reviews.map((review) => (
+              {productDetails?.product.reviews &&
+                productDetails?.product.reviews.map((review) => (
                   <ReviewCard key={review._id} review={review} />
                 ))}
             </div>
