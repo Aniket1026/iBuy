@@ -14,7 +14,7 @@ export const createProducts = async (req, res) => {
 
 export const getAllProducts = async (req, res) => {
   try {
-    const pageSize = 5;
+    const pageSize = 8;
     const productCount = await Product.countDocuments();
 
     const apiFeature = new ApiFeature(Product.find(), req.query)
@@ -22,7 +22,7 @@ export const getAllProducts = async (req, res) => {
       .filter()
       .pagination(pageSize);
     const products = await apiFeature.query;
-    res.status(200).json({ success: true, products, productCount });
+    res.status(200).json({ success: true, products, productCount,pageSize });
   } catch (error) {
     res.status(500).json({ msg: "Cannot fetch all products " + error });
   }
@@ -34,7 +34,7 @@ export const productDetails = async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) {
-      return next(new Error("product not found", 404));
+      return res.status(404).json({ success: false, message: "No product" })
     }
     return res.status(200).json({ success: true, product });
   } catch (error) {
