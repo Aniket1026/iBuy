@@ -40,9 +40,9 @@ export const productsSlice = createSlice({
   },
 });
 
-export const fetchProducts = createAsyncThunk("products/fetchAll", async () => {
-  const response = await axios.get(`${URL}/products`);
-  return await response.data.products;
+export const fetchProducts = createAsyncThunk("products/fetchAll", async (currentPage) => {
+  const response = await axios.get(`${URL}/products/?page=${currentPage}}`);
+  return await response.data;
 });
 
 export const fetchProductDetails = createAsyncThunk(
