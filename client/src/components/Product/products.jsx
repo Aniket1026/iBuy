@@ -4,8 +4,6 @@ import { fetchProducts } from "../../features/productSlice";
 import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader/loader";
 import ProductCard from "../Home/productCard";
-// import Alert from "../layout/Alert/alert";
-// import ReactPaginate from "react-paginate";
 import "./products.css";
 import { Pagination } from "./pagination";
 
@@ -16,7 +14,7 @@ const Products = () => {
 
   useEffect(() => {
     dispatch(fetchProducts(currentPage));
-  }, [dispatch,currentPage]);
+  }, [dispatch, currentPage]);
 
   const totalPage = Math.ceil(products.productCount / products.pageSize);
 
@@ -34,8 +32,11 @@ const Products = () => {
                 <ProductCard key={product._id} product={product} />
               ))}
           </div>
-          <Pagination totalPage={totalPage} currentPage={currentPage} setCurrentPage={setCurrentPage} />
-          
+          <Pagination
+            totalPage={totalPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         </Fragment>
       )}
     </Fragment>

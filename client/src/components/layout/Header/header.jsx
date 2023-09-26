@@ -5,12 +5,12 @@ import './header.css'
 
 const Header = () => {
   const options = {
-    burgerColor:"white",
+    burgerColor:"orange",
     burgerColorHover: "#eb4034",
     logo,
-    logoWidth: "20vmax",
+    logoWidth: "40vmax",
     navColor1: "white",
-    logoHoverSize: "10px",
+    logoHoverSize: "30px",
     logoHoverColor: "#eb4034",
     link1Text: "Home",
     link2Text: "Products",
