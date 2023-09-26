@@ -1,17 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { CgMouse } from "react-icons/cg";
 import { useDispatch, useSelector } from "react-redux";
 
 import MetaData from "../layout/MetaData.jsx";
 import { fetchProducts } from "../../features/productSlice.jsx";
 import "./home.css";
-import ProductCard from "./product.jsx";
+import ProductCard from "./productCard.jsx";
 import Loader from "../layout/Loader/loader.jsx";
 import Alert from "../layout/Alert/alert.jsx";
 
 const Home = () => {
   const dispatch = useDispatch();
-
   const { error, products, status } = useSelector((state) => state.products);
 
   useEffect(() => {
@@ -37,7 +36,7 @@ const Home = () => {
         {status == "loading" ? (
           <Loader />
         ) : (
-          products.map((product) => (
+          products.products.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))
         )}
