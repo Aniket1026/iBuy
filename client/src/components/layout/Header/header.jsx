@@ -6,62 +6,63 @@ import {
   IconButton,
 } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
 
 function NavList() {
   return (
-    <ul className="my-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      <Typography
+    <ul className="my-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6 text-sm">
+      <Link
         as="li"
         variant="small"
         color="blue-gray"
         className="p-1 font-medium"
+        to='/'
       >
-        <a
-          href="/"
+        <button
           className="flex items-center hover:text-blue-500 transition-colors"
         >
           Home
-        </a>
-      </Typography>
-      <Typography
+        </button>
+      </Link>
+      <Link
         as="li"
         variant="small"
         color="blue-gray"
         className="p-1 font-medium"
+        to='/products'
       >
-        <a
-          href="/products"
-          className="flex items-center hover:text-blue-500 transition-colors"
+        <button
+          className="flex items-center hover:text-blue-500 transition-colors "
         >
           Products
-        </a>
-      </Typography>
-      <Typography
+        </button>
+      </Link>
+      <Link
         as="li"
         variant="small"
         color="blue-gray"
         className="p-1 font-medium"
+        to='/contact'
       >
-        <a
-          href="/contact"
+        <button
           className="flex items-center hover:text-blue-500 transition-colors"
         >
           Contact
-        </a>
-      </Typography>
-      <Typography
+        </button>
+      </Link>
+      <Link
         as="li"
         variant="small"
         color="blue-gray"
         className="p-1 font-medium"
+        to='/account'
       >
         <a
-          href="/account"
           className="flex items-center hover:text-blue-500 transition-colors"
         >
           Account
         </a>
-      </Typography>
+      </Link>
     </ul>
   );
 }
@@ -85,7 +86,6 @@ export default function Header() {
       <div className="flex items-center justify-between text-blue-gray-900">
         <Typography
           as="a"
-          href="#"
           variant="h6"
           className="mr-4 cursor-pointer py-1.5"
         >
