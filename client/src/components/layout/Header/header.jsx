@@ -1,47 +1,115 @@
-import React from "react";
-import { ReactNavbar } from "overlay-navbar";
-import logo from '../../../images/logo.png'
-import './header.css'
+import React, { useState } from "react";
+import {
+  Navbar,
+  Collapse,
+  Typography,
+  IconButton,
+} from "@material-tailwind/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
-const Header = () => {
-  const options = {
-    burgerColor:"orange",
-    burgerColorHover: "#eb4034",
-    logo,
-    logoWidth: "40vmax",
-    navColor1: "white",
-    logoHoverSize: "30px",
-    logoHoverColor: "#eb4034",
-    link1Text: "Home",
-    link2Text: "Products",
-    link3Text: "Contact",
-    link4Text: "About",
-    link1Url: "/",
-    link2Url: "/products",
-    link3Url: "/contact",
-    link4Url: "/about",
-    link1Size: "1.3vmax",
-    link1Color: "rgba(35, 35, 35,0.8)",
-    nav1justifyContent: "flex-end",
-    nav2justifyContent: "flex-end",
-    nav3justifyContent: "flex-start",
-    nav4justifyContent: "flex-start",
-    link1ColorHover: "#eb4034",
-    link1Margin: "1vmax",
-    profileIconUrl: "/login",
-    profileIconColor: "rgba(35, 35, 35,0.8)",
-    searchIconColor: "rgba(35, 35, 35,0.8)",
-    cartIconColor: "rgba(35, 35, 35,0.8)",
-    profileIconColorHover: "#eb4034",
-    searchIconColorHover: "#eb4034",
-    cartIconColorHover: "#eb4034",
-    cartIconMargin: "1vmax",
-  };
+function NavList() {
   return (
-    <React.Fragment>
-      <ReactNavbar {...options} />
-    </React.Fragment>
+    <ul className="my-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-medium"
+      >
+        <a
+          href="/"
+          className="flex items-center hover:text-blue-500 transition-colors"
+        >
+          Home
+        </a>
+      </Typography>
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-medium"
+      >
+        <a
+          href="/products"
+          className="flex items-center hover:text-blue-500 transition-colors"
+        >
+          Products
+        </a>
+      </Typography>
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-medium"
+      >
+        <a
+          href="/contact"
+          className="flex items-center hover:text-blue-500 transition-colors"
+        >
+          Contact
+        </a>
+      </Typography>
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-medium"
+      >
+        <a
+          href="/account"
+          className="flex items-center hover:text-blue-500 transition-colors"
+        >
+          Account
+        </a>
+      </Typography>
+    </ul>
   );
-};
+}
 
-export default Header;
+export default function Header() {
+  const [openNav, setOpenNav] = useState(false);
+
+  const handleWindowResize = () =>
+    window.innerWidth >= 960 && setOpenNav(false);
+
+  React.useEffect(() => {
+    window.addEventListener("resize", handleWindowResize);
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, []);
+
+  return (
+    <Navbar className="w-full px-6 py-3">
+      <div className="flex items-center justify-between text-blue-gray-900">
+        <Typography
+          as="a"
+          href="#"
+          variant="h6"
+          className="mr-4 cursor-pointer py-1.5"
+        >
+          Ibuy
+        </Typography>
+        <div className="hidden lg:block">
+          <NavList />
+        </div>
+        <IconButton
+          variant="text"
+          className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
+          ripple={false}
+          onClick={() => setOpenNav(!openNav)}
+        >
+          {openNav ? (
+            <XMarkIcon className="h-6 w-6" strokeWidth={2} />
+          ) : (
+            <Bars3Icon className="h-6 w-6" strokeWidth={2} />
+          )}
+        </IconButton>
+      </div>
+      <Collapse open={openNav}>
+        <NavList />
+      </Collapse>
+    </Navbar>
+  );
+}
