@@ -57,11 +57,11 @@ function NavList() {
         className="p-1 font-medium"
         to='/account'
       >
-        <a
+        <button
           className="flex items-center hover:text-blue-500 transition-colors"
         >
           Account
-        </a>
+        </button>
       </Link>
     </ul>
   );
@@ -82,7 +82,7 @@ export default function Header() {
   }, []);
 
   return (
-    <Navbar className="w-full px-6 py-3">
+    <Navbar className="w-full px-6 py-3 z-10 fixed top-0 rounded-none ring-offset-blue-gray-400">
       <div className="flex items-center justify-between text-blue-gray-900">
         <Typography
           as="a"
