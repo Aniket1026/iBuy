@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import ProductDetail from "./components/Product/ProductDetail.jsx";
 import Products from "./components/Product/products.jsx";
+import Register from "./components/User/register.jsx";
+import Login from "./components/User/Login.jsx";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
           <Route exact path="/product/:productId" element={<ProductDetail />} />
           <Route exact path="/products" element={<Products />} />
           <Route path="/products/:pageNumber" element={<Products />} />
+          <Route exact path="/sign-up" element={<Register />} />
+          <Route exact path="/sign-in" element={<Login />} />
         </Routes>
         <Footer />
       </Router>

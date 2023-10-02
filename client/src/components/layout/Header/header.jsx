@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  Button,
   Navbar,
   Collapse,
   Typography,
@@ -16,11 +17,9 @@ function NavList() {
         variant="small"
         color="blue-gray"
         className="p-1 font-medium"
-        to='/'
+        to="/"
       >
-        <button
-          className="flex items-center hover:text-blue-500 transition-colors"
-        >
+        <button className="flex items-center hover:text-blue-500 transition-colors">
           Home
         </button>
       </Link>
@@ -29,11 +28,9 @@ function NavList() {
         variant="small"
         color="blue-gray"
         className="p-1 font-medium"
-        to='/products'
+        to="/products"
       >
-        <button
-          className="flex items-center hover:text-blue-500 transition-colors "
-        >
+        <button className="flex items-center hover:text-blue-500 transition-colors ">
           Products
         </button>
       </Link>
@@ -42,11 +39,9 @@ function NavList() {
         variant="small"
         color="blue-gray"
         className="p-1 font-medium"
-        to='/contact'
+        to="/contact"
       >
-        <button
-          className="flex items-center hover:text-blue-500 transition-colors"
-        >
+        <button className="flex items-center hover:text-blue-500 transition-colors">
           Contact
         </button>
       </Link>
@@ -55,13 +50,22 @@ function NavList() {
         variant="small"
         color="blue-gray"
         className="p-1 font-medium"
-        to='/account'
+        to="/sign-in"
       >
-        <button
-          className="flex items-center hover:text-blue-500 transition-colors"
-        >
-          Account
-        </button>
+        <Button variant="text" size="sm" color="black">
+          Sign In
+        </Button>
+      </Link>
+      <Link
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-medium"
+        to="/sign-up"
+      >
+        <Button variant="text" size="sm" color="black">
+          Sign Up
+        </Button>
       </Link>
     </ul>
   );
