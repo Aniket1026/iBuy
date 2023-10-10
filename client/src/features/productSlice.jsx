@@ -3,6 +3,14 @@ import axios from "axios";
 
 const URL = "http://localhost:5000/api/v1";
 
+const config = {
+  headers: {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Credentials": "http://localhost:5000/api/v1",
+  },
+  withCredentials: true,
+};
+
 export const productsSlice = createSlice({
   name: "products",
   initialState: {
@@ -49,7 +57,7 @@ export const fetchProductDetails = createAsyncThunk(
   "products/fetchProductDetails",
   async (productId) => {
     try {
-      const response = await axios.get(`${URL}/product/${productId}/`);
+      const response = await axios.get(`${URL}/product/${productId}/`,config);
       return await response.data;
     } catch (error) {
       console.log(error);
