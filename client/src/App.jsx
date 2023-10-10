@@ -9,7 +9,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import "./App.css";
-import ProductDetail from "./components/Product/ProductDetail.jsx";
+import ProductDetail from "./components/Product/productDetail.jsx";
 import Products from "./components/Product/products.jsx";
 import Register from "./components/User/register.jsx";
 import Login from "./components/User/Login.jsx";
