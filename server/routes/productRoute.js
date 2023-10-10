@@ -12,7 +12,7 @@ import {
 import { authorizeRoles, isUserAuthenticated } from "../middlewares/auth.js";
 const router = express.Router();
 
-router.get("/products", isUserAuthenticated, getAllProducts);
+router.get("/products", getAllProducts);
 router.post(
   "/admin/product/new",
   isUserAuthenticated,

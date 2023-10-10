@@ -9,7 +9,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import "./App.css";
-import ProductDetail from "./components/Product/ProductDetail.jsx";
+import ProductDetail from "./components/Product/productDetail.jsx";
 import Products from "./components/Product/products.jsx";
 import Register from "./components/User/register.jsx";
 import Login from "./components/User/Login.jsx";
@@ -21,6 +21,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 };
 
 function App() {
+  const { isAuth } = useSelector((state) => state.auth);
   return (
     <React.Fragment>
       <Router>
@@ -35,7 +36,11 @@ function App() {
           <Route exact path="/products" element={<Products />} />
           <Route path="/products/:pageNumber" element={<Products />} />
           <Route exact path="/sign-up" element={<Register />} />
-          <Route exact path="/sign-in" element={<Login />} />
+          <Route
+            exact
+            path="/sign-in"
+            element={isAuth ? <Navigate to='/' /> : <Login />}
+          />
         </Routes>
         <Footer />
       </Router>
