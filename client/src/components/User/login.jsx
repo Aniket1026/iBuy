@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { userLogin } from "../../features/authSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { user, status } = useSelector((state) => state.auth);
   const [userData, setUserData] = useState({});
 
   const setEmail = (e) => {
