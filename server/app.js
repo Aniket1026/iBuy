@@ -9,7 +9,7 @@ import cors from 'cors'
 
 const app = express()
 const corsOptions = {
-  origin: "http://localhost:5173", 
+  origin: "https://i-buy-git-main-aniket1026.vercel.app/",
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };
