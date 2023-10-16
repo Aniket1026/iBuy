@@ -2,12 +2,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import  Cookies from "js-cookie";
 
-const URL = "http://localhost:5000/api/v1";
+const URL = "https://ibuy-backend.onrender.com/api/v1";
 
 const config = {
   headers: {
     "Content-Type": "application/json",
-    "Access-Control-Allow-Credentials": "http://localhost:5173",
+    "Access-Control-Allow-Credentials": true
   },
   withCredentials: true,
 };
@@ -43,7 +43,8 @@ export const userLogin = createAsyncThunk(
   "user/login",
   async (data) => {
     try {
-      const response = await axios.post(`${URL}/login`, data,config);
+      const response = await axios.post(`${URL}/login`, data, config);
+      console.log(response.data.token);
       Cookies.set("token", response.data.token, { expires: 1 });
       return await response.data;
     } catch (error) { 
@@ -51,5 +52,4 @@ export const userLogin = createAsyncThunk(
     }
   }
 );
-
 export default authSlice.reducer;
