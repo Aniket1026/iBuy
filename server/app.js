@@ -9,7 +9,7 @@ import cors from 'cors'
 
 const app = express()
 const corsOptions = {
-  origin: "https://i-969z5k65y-aniket1026.vercel.app",
+  origin: "https://i-buy-pi.vercel.app/",
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };
