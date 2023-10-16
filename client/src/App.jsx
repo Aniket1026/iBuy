@@ -12,7 +12,7 @@ import "./App.css";
 import ProductDetail from "./components/Product/productDetail.jsx";
 import Products from "./components/Product/products.jsx";
 import Register from "./components/User/register.jsx";
-import Login from "./components/User/Login.jsx";
+import Login from "./components/User/login.jsx";
 import { useSelector } from "react-redux";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
