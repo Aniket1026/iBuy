@@ -36,6 +36,15 @@ export const authSlice = createSlice({
         state.user = null;
         state.error = false;
       })
+      .addCase(userLogout.pending, (state) => {
+        state.status = 'loading';
+      }).addCase(userLogout.fulfilled, (state) => {
+        state.user = null;
+        state.isAuth = false;
+        state.status = 'fulfilled'
+      }).addCase(userLogout.rejected, (state) => {
+        state.error = 'True'
+    })
   },
 });
 
@@ -52,4 +61,13 @@ export const userLogin = createAsyncThunk(
     }
   }
 );
+
+export const userLogout = createAsyncThunk("user/logout", async () => {
+  try {
+    const response = await axios.get(`${URL}/logout`, config)
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
+})
 export default authSlice.reducer;
