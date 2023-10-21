@@ -65,6 +65,7 @@ export const authSlice = createSlice({
 export const userRegister = createAsyncThunk("user/register", async (data) => {
   try {
     const response = await axios.post(`${URL}/register`, data, config);
+    Cookies.set("token", response.data.token, { expires: 1 });
     console.log(response.data);
   } catch (error) {
     console.log(error);
