@@ -27,7 +27,8 @@ import {
 } from "@heroicons/react/24/solid";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { userLogout } from "../../../features/authSlice";
 
 const profileMenuItems = [
   {
@@ -54,6 +55,7 @@ const profileMenuItems = [
 
 function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const dispatch = useDispatch();
 
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -102,8 +104,9 @@ function ProfileMenu() {
                 variant="small"
                 className="font-normal"
                 color={isLastItem ? "red" : "inherit"}
+                onClick={() => dispatch(userLogout())}
               >
-                {label}
+                {label} k
               </Typography>
             </MenuItem>
           );
