@@ -35,7 +35,7 @@ function App() {
           />
           <Route exact path="/products" element={<Products />} />
           <Route path="/products/:pageNumber" element={<Products />} />
-          <Route exact path="/sign-up" element={<Register />} />
+          <Route exact path="/sign-up" element={isAuth ?<Navigate to='/' />: <Register />} />
           <Route
             exact
             path="/sign-in"
