@@ -1,19 +1,21 @@
 import React from "react";
-import Footer from "./components/layout/Footer/footer.jsx";
-import Header from "./components/layout/Header/header.jsx";
-import Home from "./components/Home/home.jsx";
+import { useSelector } from "react-redux";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
 } from "react-router-dom";
-import "./App.css";
+
+import Footer from "./components/layout/Footer/footer.jsx";
+import Header from "./components/layout/Header/header.jsx";
+import Home from "./components/Home/home.jsx";
 import ProductDetail from "./components/Product/productDetail.jsx";
 import Products from "./components/Product/products.jsx";
 import Register from "./components/User/register.jsx";
 import Login from "./components/User/login.jsx";
-import { useSelector } from "react-redux";
+
+import "./App.css";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const { isAuth } = useSelector((state) => state.auth);
