@@ -23,6 +23,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { userLogout } from "../../../features/authSlice";
+import { fetchUserDetails } from "../../../features/userSlice";
 
 const profileMenuItems = [
   {
@@ -46,9 +47,7 @@ function ProfileMenu() {
   const closeMenu = () => setIsMenuOpen(false);
 
   const handleMyProfileClick = () => {
-    // Code to handle "My Profile" click event
-    // Add your logic here
-    console.log("My Profile Clicked");
+    dispatch(fetchUserDetails());
   };
 
   const handleEditProfileClick = () => {
@@ -58,10 +57,8 @@ function ProfileMenu() {
   };
 
   const handleSignOutClick = () => {
-    // Code to handle "Sign Out" click event
-    // Add your logic here
-    console.log("Sign Out Clicked");
-  }
+    dispatch(userLogout());
+  };
 
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
@@ -90,47 +87,55 @@ function ProfileMenu() {
         {profileMenuItems.map(({ label, icon }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
           let clickHandler;
+          let linkTo;
 
           // Set the appropriate click handler based on the label
           switch (label) {
             case "My Profile":
               clickHandler = handleMyProfileClick;
+              linkTo = "/account";
               break;
             case "Edit Profile":
               clickHandler = handleEditProfileClick;
+              linkTo = "/account/update";
               break;
             case "Sign Out":
               clickHandler = handleSignOutClick;
+              linkTo = "/sign-in";
               break;
             default:
               clickHandler = closeMenu;
           }
           return (
-            <MenuItem
+            <Link
+              to={linkTo}
               key={label}
               onClick={() => {
                 clickHandler();
                 closeMenu();
               }}
-              className={`flex items-center gap-2 rounded ${
-                isLastItem
-                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                  : ""
-              }`}
             >
-              {React.createElement(icon, {
-                className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
-                strokeWidth: 2,
-              })}
-              <Typography
-                as="span"
-                variant="small"
-                className="font-normal"
-                color={isLastItem ? "red" : "inherit"}
+              <MenuItem
+                className={`flex items-center gap-2 rounded ${
+                  isLastItem
+                    ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                    : ""
+                }`}
               >
-                {label}
-              </Typography>
-            </MenuItem>
+                {React.createElement(icon, {
+                  className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
+                  strokeWidth: 2,
+                })}
+                <Typography
+                  as="span"
+                  variant="small"
+                  className="font-normal"
+                  color={isLastItem ? "red" : "inherit"}
+                >
+                  {label}
+                </Typography>
+              </MenuItem>
+            </Link>
           );
         })}
       </MenuList>
