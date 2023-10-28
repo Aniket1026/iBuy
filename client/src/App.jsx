@@ -14,6 +14,7 @@ import ProductDetail from "./components/Product/productDetail.jsx";
 import Products from "./components/Product/products.jsx";
 import Register from "./components/User/register.jsx";
 import Login from "./components/User/login.jsx";
+import UserProfile from "./components/User/userProfile.jsx";
 
 import "./App.css";
 
@@ -37,11 +38,20 @@ function App() {
           />
           <Route exact path="/products" element={<Products />} />
           <Route path="/products/:pageNumber" element={<Products />} />
-          <Route exact path="/sign-up" element={isAuth ?<Navigate to='/' />: <Register />} />
+          <Route
+            exact
+            path="/sign-up"
+            element={isAuth ? <Navigate to="/" /> : <Register />}
+          />
           <Route
             exact
             path="/sign-in"
-            element={isAuth ? <Navigate to='/' /> : <Login />}
+            element={isAuth ? <Navigate to="/" /> : <Login />}
+          />
+          <Route
+            exact
+            path="/account"
+            element={<PrivateRoute component={UserProfile} />}
           />
         </Routes>
         <Footer />
