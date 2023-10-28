@@ -7,19 +7,30 @@ import { sendEmail } from "../utils/sendEmail.js";
 export const userRegister = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
-      folder: 'avatars',
-      width: 150,
-      crop: 'scale'
-    })
-
+    // const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+      //   folder: 'avatars',
+      //   width: 150,
+      //   crop: 'scale'
+      // })
+    if (!name || !email || !password) {
+      return res.status(400).json({
+        success: false,
+        msg: "Please enter all the fields",
+      });
+    }
+    if (User.findOne({ email })) {
+      return res.status(400).json({
+        success: false,
+        msg: "User already exists",
+      });
+    }
     const user = await User.create({
       name,
       email,
       password,
       avatar: {
-        public_id: myCloud.public_id,
-        url: myCloud.secure_url,
+        public_id: "",
+        url: "",
       },
     });
 
