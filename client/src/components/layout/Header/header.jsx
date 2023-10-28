@@ -34,14 +34,6 @@ const profileMenuItems = [
     icon: Cog6ToothIcon,
   },
   {
-    label: "Inbox",
-    icon: InboxArrowDownIcon,
-  },
-  {
-    label: "Help",
-    icon: LifebuoyIcon,
-  },
-  {
     label: "Sign Out",
     icon: PowerIcon,
   },
@@ -52,6 +44,24 @@ function ProfileMenu() {
   const dispatch = useDispatch();
 
   const closeMenu = () => setIsMenuOpen(false);
+
+  const handleMyProfileClick = () => {
+    // Code to handle "My Profile" click event
+    // Add your logic here
+    console.log("My Profile Clicked");
+  };
+
+  const handleEditProfileClick = () => {
+    // Code to handle "Edit Profile" click event
+    // Add your logic here
+    console.log("Edit Profile Clicked");
+  };
+
+  const handleSignOutClick = () => {
+    // Code to handle "Sign Out" click event
+    // Add your logic here
+    console.log("Sign Out Clicked");
+  }
 
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
@@ -79,10 +89,29 @@ function ProfileMenu() {
       <MenuList className="p-1">
         {profileMenuItems.map(({ label, icon }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
+          let clickHandler;
+
+          // Set the appropriate click handler based on the label
+          switch (label) {
+            case "My Profile":
+              clickHandler = handleMyProfileClick;
+              break;
+            case "Edit Profile":
+              clickHandler = handleEditProfileClick;
+              break;
+            case "Sign Out":
+              clickHandler = handleSignOutClick;
+              break;
+            default:
+              clickHandler = closeMenu;
+          }
           return (
             <MenuItem
               key={label}
-              onClick={closeMenu}
+              onClick={() => {
+                clickHandler();
+                closeMenu();
+              }}
               className={`flex items-center gap-2 rounded ${
                 isLastItem
                   ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
@@ -98,7 +127,6 @@ function ProfileMenu() {
                 variant="small"
                 className="font-normal"
                 color={isLastItem ? "red" : "inherit"}
-                onClick={() => dispatch(userLogout())}
               >
                 {label}
               </Typography>
