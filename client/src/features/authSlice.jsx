@@ -29,8 +29,8 @@ export const authSlice = createSlice({
       })
       .addCase(userRegister.fulfilled, (state, action) => {
         state.status = "fulfilled";
-        state.isAuth = true;
-        state.user = action.payload;
+        state.isAuth = action.payload.success;
+        state.user = action.payload.user;
       })
       .addCase(userRegister.rejected, (state) => {
         state.user = null;
@@ -40,19 +40,20 @@ export const authSlice = createSlice({
         state.status = "loading";
       })
       .addCase(userLogin.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.isAuth = true;
+        state.user = action.payload.user;
+        state.isAuth = action.payload.success;
         state.status = "fulfilled";
       })
       .addCase(userLogin.rejected, (state, action) => {
         state.user = null;
         state.error = false;
+        state.isAuth = false
       })
       .addCase(userLogout.pending, (state) => {
         state.status = "loading";
       })
       .addCase(userLogout.fulfilled, (state) => {
-        state.user = null;
+        state.user = null; 
         state.isAuth = false;
         state.status = "fulfilled";
       })
