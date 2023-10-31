@@ -17,6 +17,7 @@ import {
   Cog6ToothIcon,
   InboxArrowDownIcon,
   LifebuoyIcon,
+  ShoppingCartIcon,
   PowerIcon,
 } from "@heroicons/react/24/solid";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -33,6 +34,10 @@ const profileMenuItems = [
   {
     label: "Edit Profile",
     icon: Cog6ToothIcon,
+  },
+  {
+    label: "My Orders",
+    icon: ShoppingCartIcon,
   },
   {
     label: "Sign Out",
