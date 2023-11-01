@@ -1,5 +1,5 @@
 .banner {
-  background-image: url("../../images/cover.jfif");
+  background-image: url("../../images/coverImage.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -14,7 +14,7 @@
 
 .banner > h1 {
   margin: 5vmax;
-
+  color:rgb(226, 231, 216);
   font: 600 2.5vmax "Roboto";
 }
 
@@ -46,7 +46,7 @@
   position: absolute;
   top: 0%;
   left: 0;
-  clip-path: polygon(100% 68%, 0 100%, 100% 100%);
+  clip-path: polygon(100% 78%, 0 100%, 100% 100%);
   max-width: 100%;
 }
 
