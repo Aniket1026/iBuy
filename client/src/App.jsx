@@ -15,6 +15,7 @@ import Products from "./components/Product/products.jsx";
 import Register from "./components/User/register.jsx";
 import Login from "./components/User/login.jsx";
 import UserProfile from "./components/User/userProfile.jsx";
+import Cart from "./components/Cart/cart.jsx";
 
 import "./App.css";
 
@@ -52,6 +53,11 @@ function App() {
             exact
             path="/account"
             element={<PrivateRoute component={UserProfile} />}
+          />
+          <Route
+            exact
+            path="/account/orders"
+            element={<PrivateRoute component={Cart} />}
           />
         </Routes>
         <Footer />
