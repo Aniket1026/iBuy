@@ -65,6 +65,10 @@ function ProfileMenu() {
     dispatch(userLogout());
   };
 
+  const handleMyOrdersClick = () => {
+    console.log("My Orders Clicked");
+  }
+
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
       <MenuHandler>
@@ -107,6 +111,10 @@ function ProfileMenu() {
             case "Sign Out":
               clickHandler = handleSignOutClick;
               linkTo = "/sign-in";
+              break;
+            case "My Orders":
+              clickHandler = handleMyOrdersClick;
+              linkTo = "/account/orders"; 
               break;
             default:
               clickHandler = closeMenu;
