@@ -14,8 +14,8 @@ const config = {
 export const cartSlice = createSlice({
   name: "cart",
   initialState: {
-    cartItems: null,
-    quantity: 0,
+    cartItems: [],
+    quantity: [],
     status: "idle",
     error: null,
   },
@@ -26,8 +26,8 @@ export const cartSlice = createSlice({
     });
     builder.addCase(addToCart.fulfilled, (state, action) => {
       state.status = action.payload.response.success;
-      state.cartItems = action.payload.response.product;
-      state.quantity = action.payload.quantity;
+      state.cartItems.push(action.payload.response.product);
+      state.quantity.push(action.payload.quantity);
     });
     builder.addCase(addToCart.rejected, (state, action) => {
       state.status = "failed";
