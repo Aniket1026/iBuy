@@ -9,6 +9,7 @@ import "./productDetail.css";
 import Loader from "../layout/Loader/loader.jsx";
 import Alert from "../layout/Alert/alert.jsx";
 import ReviewCard from "./reviewCard.jsx";
+import { addToCart } from "../../features/cartSlice.jsx";
 
 const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
@@ -86,6 +87,9 @@ const ProductDetail = () => {
                   </div>
                   <button
                     disabled={productDetails?.product?.Stock < 1 ? true : false}
+                    onClick={() => {
+                      dispatch(addToCart({ productId, quantity }));
+                    }}
                   >
                     Add to Cart
                   </button>
