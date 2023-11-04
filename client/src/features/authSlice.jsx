@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { BACKEND_URL } from "../contants/constant";
 
-const URL = "https://ibuy-backend.onrender.com/api/v1";
+const URL = BACKEND_URL;
 
 const config = {
   headers: {

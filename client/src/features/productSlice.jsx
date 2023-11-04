@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
-const URL = "https://ibuy-backend.onrender.com/api/v1";
+import { BACKEND_URL } from "../contants/constant";
+const URL = BACKEND_URL;
 
 const config = {
   headers: {
