@@ -37,6 +37,11 @@ function App() {
             path="/product/:productId"
             element={<PrivateRoute component={ProductDetail} />}
           />
+          <Route
+            exact
+            path="/products/product/:productId"
+            element={<PrivateRoute component={ProductDetail} />}
+          />
           <Route exact path="/products" element={<Products />} />
           <Route path="/products/:pageNumber" element={<Products />} />
           <Route
