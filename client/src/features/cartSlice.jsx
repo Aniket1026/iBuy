@@ -19,7 +19,16 @@ export const cartSlice = createSlice({
     status: "idle",
     error: null,
   },
-  reducers: {},
+  reducers: {
+    removeCartItem: (state, action) => {
+      const cartItemIdToRemove = action.payload;
+      console.log(action.payload);
+      console.log(cartItemIdToRemove);
+      state.cartItems = state.cartItems.filter(
+        (item) => item.response.product._id !== cartItemIdToRemove
+      );
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(addToCart.pending, (state, action) => {
       state.status = "loading";
@@ -49,4 +58,5 @@ export const addToCart = createAsyncThunk(
   }
 );
 
+export const { removeCartItem } = cartSlice.actions;
 export default cartSlice.reducer;
