@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector} from "react-redux";
 import { Typography } from "@mui/material";
 import { HiShoppingCart } from "react-icons/hi";
 import { Link } from "react-router-dom";
@@ -8,8 +8,7 @@ import CartItemCard from "./cartItemCard";
 import './cart.css'
 
 const Cart = () => {
-  const dispatch = useDispatch();
-  const { cartItems} = useSelector((state) => state.cart);
+  const { cartItems } = useSelector((state) => state.cart)
 
   return (
     <Fragment>
