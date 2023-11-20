@@ -58,5 +58,13 @@ export const addToCart = createAsyncThunk(
   }
 );
 
+export const saveShippingInfoAsync = createAsyncThunk(
+  "shippingInfo/saveShippingInfoAsync",
+  async (data,) => {
+    localStorage.setItem("shippingInfo", JSON.stringify(data));
+    return data;
+  }
+);
+
 export const { removeCartItem } = cartSlice.actions;
 export default cartSlice.reducer;
