@@ -1,14 +1,14 @@
 import React, { Fragment } from "react";
-import { useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import { Typography } from "@mui/material";
 import { HiShoppingCart } from "react-icons/hi";
 import { Link } from "react-router-dom";
 
 import CartItemCard from "./cartItemCard";
-import './cart.css'
+import "./cart.css";
 
 const Cart = () => {
-  const { cartItems } = useSelector((state) => state.cart)
+  const { cartItems } = useSelector((state) => state.cart);
 
   return (
     <Fragment>
@@ -33,15 +33,9 @@ const Cart = () => {
                 <div className="cartContainer" key={item.response.product.name}>
                   <CartItemCard item={item} />
                   <div className="cartInput">
-                    <button
-                    >
-                      -
-                    </button>
+                    <button>-</button>
                     <input type="number" value={item.quantity} readOnly />
-                    <button
-                    >
-                      +
-                    </button>
+                    <button>+</button>
                   </div>
                   <p className="cartSubtotal">{`₹${
                     item.response.product.price * item.quantity
@@ -54,14 +48,15 @@ const Cart = () => {
               <div className="cartGrossProfitBox">
                 <p>Gross Total</p>
                 <p>{`₹${cartItems.reduce(
-                  (acc, item) => acc + item.quantity * item.response.product.price,
+                  (acc, item) =>
+                    acc + item.quantity * item.response.product.price,
                   0
                 )}`}</p>
               </div>
               <div></div>
               <div className="checkOutBtn">
-                  <button>
-                    <Link to="/checkout">Check Out</Link>
+                <button>
+                  <Link to="/shipping">Check Out</Link>
                 </button>
               </div>
             </div>
