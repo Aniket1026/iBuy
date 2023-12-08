@@ -58,9 +58,9 @@ export const addToCart = createAsyncThunk(
   }
 );
 
-export const saveShippingInfoAsync = createAsyncThunk(
+export const saveShippingInfo = createAsyncThunk(
   "shippingInfo/saveShippingInfoAsync",
-  async (data,) => {
+  async (data) => {
     localStorage.setItem("shippingInfo", JSON.stringify(data));
     return data;
   }
