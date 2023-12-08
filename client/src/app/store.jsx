@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import productsReducer from '../features/productSlice.jsx'
-import authReducer from '../features/authSlice.jsx'
-import userReducer from '../features/userSlice.jsx'
-import cartReducer from '../features/cartSlice.jsx'
+import productsReducer from "../features/productSlice.jsx";
+import authReducer from "../features/authSlice.jsx";
+import userReducer from "../features/userSlice.jsx";
+import cartReducer from "../features/cartSlice.jsx";
+import orderReducer from "../features/orderSlice.jsx";
 
 export default configureStore({
   reducer: {
@@ -10,6 +11,6 @@ export default configureStore({
     auth: authReducer,
     user: userReducer,
     cart: cartReducer,
+    order: orderReducer,
   },
 });
-
