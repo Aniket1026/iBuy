@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 // import PinDropIcon from "@mui/icons-material/PinDrop";
 import { MdPinDrop } from "react-icons/md";
 import { IoMdHome } from "react-icons/io";
@@ -28,6 +28,7 @@ const Shipping = ({ history }) => {
   const [country, setCountry] = useState(shippingInfo?.country || "none");
   const [pinCode, setPinCode] = useState(shippingInfo?.pinCode || "");
   const [phoneNo, setPhoneNo] = useState(shippingInfo?.phoneNo || "");
+  const [submitted, setSubmitted] = useState(false);
 
   const shippingSubmit = (e) => {
     e.preventDefault();
@@ -41,6 +42,7 @@ const Shipping = ({ history }) => {
       saveShippingInfo({ address, city, state, country, pinCode, phoneNo })
     );
     // history.push("/order/confirm");
+    setSubmitted(true);
   };
 
   return (
@@ -140,15 +142,13 @@ const Shipping = ({ history }) => {
                 </select>
               </div>
             )}
-
-            <Link to="/order/confirm">
-              <input
-                type="submit"
-                value="Continue"
-                className="shippingBtn"
-                disabled={state ? false : true}
-              />
-            </Link>
+            <input
+              type="submit"
+              value="Continue"
+              className="shippingBtn"
+              disabled={state ? false : true}
+            />
+            {submitted && <Navigate to="/order/confirm" />}
           </form>
         </div>
       </div>
