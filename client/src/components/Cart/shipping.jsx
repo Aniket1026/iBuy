@@ -16,7 +16,7 @@ import { Country, State } from "country-state-city";
 import MetaData from "../layout/MetaData";
 import { saveShippingInfo } from "../../features/cartSlice";
 import CheckoutSteps from "../Cart/checkoutSteps.jsx";
-import "./Shipping.css";
+import "./shipping.css";
 
 const Shipping = ({ history }) => {
   const dispatch = useDispatch();
