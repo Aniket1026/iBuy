@@ -16,6 +16,7 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState: {
     cartItems: [],
+    shippingInfo:[],
     status: "idle",
     error: null,
   },
@@ -41,6 +42,11 @@ export const cartSlice = createSlice({
       state.status = "failed";
       state.error = action.error;
     });
+    builder.addCase(saveShippingInfo.fulfilled, (state, action) => {
+      state.shippingInfo = action.payload;
+      console.log(action.payload);
+      localStorage.setItem("shippingInfo", JSON.stringify(action.payload));
+     });
   },
 });
 
@@ -61,7 +67,7 @@ export const addToCart = createAsyncThunk(
 export const saveShippingInfo = createAsyncThunk(
   "shippingInfo/saveShippingInfoAsync",
   async (data) => {
-    localStorage.setItem("shippingInfo", JSON.stringify(data));
+    // localStorage.setItem("shippingInfo", JSON.stringify(data));
     return data;
   }
 );
