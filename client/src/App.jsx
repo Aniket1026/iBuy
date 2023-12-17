@@ -18,6 +18,8 @@ import UserProfile from "./components/User/userProfile.jsx";
 import Cart from "./components/Cart/cart.jsx";
 
 import "./App.css";
+import Shipping from "./components/Cart/shipping.jsx";
+import ConfirmOrder from "./components/Cart/confirmOrder.jsx";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const { isAuth } = useSelector((state) => state.auth);
@@ -63,6 +65,16 @@ function App() {
             exact
             path="/account/orders"
             element={<PrivateRoute component={Cart} />}
+          />
+          <Route
+            exact
+            path="/shipping"
+            element={<PrivateRoute component={Shipping} />}
+          />
+          <Route
+            exact
+            path="/order/confirm"
+            element={<PrivateRoute component={ConfirmOrder} />}
           />
         </Routes>
         <Footer />
